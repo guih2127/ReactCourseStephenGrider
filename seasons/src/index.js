@@ -2,19 +2,9 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import SeasonDisplay from './SeasonDisplay';
 import Spinner from './Spinner';
-
-// const App = () => {
-//   window.navigator.geolocation.getCurrentPosition(
-//     (position) => console.log(position),
-//     (err) => console.log(err)
-//   );
-
-//   return <div>Latitude: </div>
-// };
-
 class App extends Component {
 
-  state = { latitude : null, errorMessage: ''}; // mais uma forma de inicializar
+  state = { latitude : null, errorMessage: ''};
 
   componentDidMount() {
     window.navigator.geolocation.getCurrentPosition(
@@ -28,7 +18,6 @@ class App extends Component {
   }
 
   renderContent() {
-
     if (this.state.errorMessage && !this.state.latitude) {
       return <div>Error: {this.state.errorMessage}</div>;
     }

@@ -22,9 +22,6 @@ const getSeason = (latitude, month) => {
 
 const SeasonDisplay = props => {
     const season = getSeason(props.latitude, new Date().getMonth());
-    // criamos um objeto de config no início do componente e, aqui, através
-    // da string retornada com getSeason(), conseguimos obter os dados do
-    // objeto que queremos.
 
     return (
         <div className={`season-display ${season}`}>
