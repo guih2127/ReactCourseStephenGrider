@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import SeasonDisplay from './SeasonDisplay';
+import Spinner from './Spinner';
 
 // const App = () => {
 //   window.navigator.geolocation.getCurrentPosition(
@@ -17,10 +19,19 @@ class App extends Component {
   // dentro dele, temos que chamar a função super(props), para certificarmos
   // que a função implementada na classe Component (que extendemos) seja chamada,
   // e só após isso inicializemos o nosso state.
-  constructor(props) {
-    super(props); // super é uma referência a função do parente (pai)
-    this.state = { latitude: null, errorMessage: '' };
+  // constructor(props) {
+  //   super(props); // super é uma referência a função do parente (pai)
+  //   this.state = { latitude: null, errorMessage: '' };
+  // }
 
+  state = { latitude : null, errorMessage: ''}; // mais uma forma de inicializar
+  // state, mas dessa vez fora do construtor. no final das contas, é a mesma coisa
+  // já que escrevendo assim, o babel irá implementar o construtor pra nós
+
+  // movemos a função que carrega nossos dados para a função componentDidMount()
+  // react nos manda fazer isso por uma razão: se separarmos a parte de carregar 
+  // dados para essa função, deixamos nosso código mais claro e limpo.
+  componentDidMount() {
     window.navigator.geolocation.getCurrentPosition(
       (position) => {
         this.setState({ latitude: position.coords.latitude });
@@ -43,28 +54,23 @@ class App extends Component {
 
     // renderização condicional! renderizamos o componente de acordo com o state
     // ou de acordo com o props.
+
     if (this.state.errorMessage && !this.state.latitude) {
       return <div>Error: {this.state.errorMessage}</div>;
     }
 
     if (!this.state.errorMessage && this.state.latitude) {
-      return <div>Latitude: {this.state.latitude}</div>;
+      // podemos pegar um state e passar como props para um componente filho
+      // ou seja, quando atualizarmos esse state, mesmo que ele esteja sendo
+      // recebido por props, o componente irá re-renderizar normalmente
+      // ou seja, ao chamar setState, o componente renderiza a si mesmo
+      // e aos seus filhos
+      return <SeasonDisplay latitude={this.state.latitude} />;
     }
 
-    return <div>Loading...</div>;
+    return <Spinner text="Waiting for your permission..." />;
   }
 
-  // quando o componente é renderizado, essa função é chamada
-  componentDidMount() {
-    console.log("component did mount")
-  }
-
-  // quando o componente é atualizado (renderizado novamente), essa função
-  // é chamada
-  componentDidUpdate() {
-    console.log("component did update")
-  }
-  
 }
 
 ReactDOM.render(
