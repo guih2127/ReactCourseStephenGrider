@@ -1,0 +1,25 @@
+Considerando uma aplicação que possui um cliente que preenche um formulário, e 
+este formulário descreve COMO ele quer alterar dados em uma empresa. Ou seja,
+ele pode ser preenchido de tipos diferentes.
+
+Podemos considerar, neste processo:
+1 - Pessoa abrindo o formulário => ACTION CREATOR
+2 - O formulário => ACTION (retornada pelo ACTION CREATOR)
+
+O ACTION CREATOR possui o tipo de dados que queremos alterar, enquanto a ACTION
+possui as mudanças que queremos fazer. O propósito da ACTION é descrever as
+mudanças que queremos fazer em uma aplicação.
+
+3 - Form Receiver => DISPATCH
+4 - Departments => REDUCERS
+
+A ACTION será passada para uma função DISPATCH que, por sua vez, tem como função
+enviar uma cópia dessa ACTION (formulário) para vários REDUCERS (departamentos)
+diferentes.
+
+Um REDUCER tem a função de verificar o tipo da ACTION para, então, fazer a 
+alteração nos dados.
+
+Os dados, como por exemplo, uma lista é chamado de:
+
+5 - Compiled Department Data => STATE.
